@@ -1,0 +1,37 @@
+import numpy as np
+import random
+
+def readprojects(projects):
+    for project in projects:
+        foldpath = "../dataset"
+        my_matrix = np.loadtxt(open(foldpath+'/'+project),delimiter=",",skiprows=1)
+        print(my_matrix)
+
+def divedeTosubsets(data,folds,seed):
+    # seed使得结果可复现，打乱现有顺序
+    np.random.seed(seed)
+    np.random.shuffle(data)
+    #数据集切分(array_split不等量分割# )
+    sub=np.array_split(data,folds)
+    return sub
+
+projects=['ivy-1.4.csv']
+readprojects(projects)
+
+data = np.arange(18).reshape(9, 2)
+print(data)
+k=5
+run=1
+totalruns = 10
+seed=run
+for run in range(totalruns):
+    sub = divedeTosubsets(data, k, seed)
+    for i in range(k):
+        Xtrain = np.array([],dtype=int)
+        Ytrain = sub[i]
+        print(Ytrain)
+        for j in range(k):
+            if(j!=i):
+                Xtrain=np.vstack((Xtrain,sub[j]))
+                print("!!!!!!!!!!")
+                print(Xtrain)
