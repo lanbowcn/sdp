@@ -27,11 +27,11 @@ seed=run
 for run in range(totalruns):
     sub = divedeTosubsets(data, k, seed)
     for i in range(k):
-        Xtrain = np.array([],dtype=int)
         Ytrain = sub[i]
+        Xtrain= np.empty(shape=[0,2])
         print(Ytrain)
         for j in range(k):
             if(j!=i):
                 Xtrain=np.vstack((Xtrain,sub[j]))
-                print("!!!!!!!!!!")
-                print(Xtrain)
+                y=Xtrain[1]/Xtrain[0]
+                print(y)
