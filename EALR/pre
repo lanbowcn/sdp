@@ -1,11 +1,11 @@
 import numpy as np
-import random
+from sklearn.linear_model import LinearRegression
 
 def readprojects(projects):
     for project in projects:
         foldpath = "../dataset"
         my_matrix = np.loadtxt(open(foldpath+'/'+project),delimiter=",",skiprows=1)
-        print(my_matrix)
+    return my_matrix
 
 def divedeTosubsets(data,folds,seed):
     # seed使得结果可复现，打乱现有顺序
@@ -16,22 +16,27 @@ def divedeTosubsets(data,folds,seed):
     return sub
 
 projects=['ivy-1.4.csv']
-readprojects(projects)
+data = readprojects(projects)
 
-data = np.arange(18).reshape(9, 2)
-print(data)
-k=5
+# data = np.arange(18).reshape(9, 2)
+# print(data)
+k=10
 run=1
-totalruns = 10
+totalruns = 1
 seed=run
 for run in range(totalruns):
     sub = divedeTosubsets(data, k, seed)
-    for i in range(k):
-        Ytrain = sub[i]
-        Xtrain= np.empty(shape=[0,2])
-        print(Ytrain)
+    for i in range(1):
+        Yest = sub[i]
+        train= np.empty(shape=[0,22],dtype=float)
+        #print(Ytrain)
         for j in range(k):
             if(j!=i):
-                Xtrain=np.vstack((Xtrain,sub[j]))
-                y=Xtrain[1]/Xtrain[0]
-                print(y)
+                train=np.vstack((train,sub[j]))
+        train[:,21]=train[:,21]/train[:,11]
+        print(train[:,21].shape)
+        model = LinearRegression(fit_intercept=True,normalize=False,copy_X=True,n_jobs=1)
+        xcol = [0,1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20]
+        model.fit(train[:,xcol],train[:,21])
+        a = model.predict(Yest[:,xcol])
+        print(a)
