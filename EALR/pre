@@ -1,9 +1,9 @@
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
-def readprojects(projects):
+def readfiles(projects):
     for project in projects:
-        foldpath = "../dataset"
+        foldpath = "../dataset1"
         my_matrix = np.loadtxt(open(foldpath+'/'+project),delimiter=",",skiprows=1)
     return my_matrix
 
@@ -16,7 +16,7 @@ def divedeTosubsets(data,folds,seed):
     return sub
 
 projects=['ivy-1.4.csv']
-data = readprojects(projects)
+data = readfiles(projects)
 
 # data = np.arange(18).reshape(9, 2)
 # print(data)
