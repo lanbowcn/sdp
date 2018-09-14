@@ -21,7 +21,11 @@ def readfiles(projects):
 
 if __name__ == '__main__':
     projects=['jdt.csv']
-    data = readfiles(projects)
-    for str in data['commitdate']:
-        np.Series a = datetime.datetime.strptime(data['commitdate'],"%Y/%m/%d  %H:%M:%S")
+    # data = readfiles(projects)
+    data = pd.read_csv('../dataset2/jdt.csv', index_col='commitdate', parse_dates=True).sort_index()
+    print(data.tail(5))
+    print("------------")
+    print(data.sort_index)
+    # for str in data['commitdate']:
+        # np.Series a = datetime.datetime.strptime(data['commitdate'],"%Y/%m/%d  %H:%M:%S")
 
